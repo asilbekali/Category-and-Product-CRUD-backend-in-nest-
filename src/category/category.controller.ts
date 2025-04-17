@@ -6,10 +6,12 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { ApiQuery } from '@nestjs/swagger';
 
 @Controller('category')
 export class CategoryController {
@@ -19,9 +21,21 @@ export class CategoryController {
     return this.categoryService.create(createCategoryDto);
   }
 
+  @ApiQuery({ name: 'order', required: false, enum: ['asc', 'desc'], description: 'Sort order' }) 
+  @ApiQuery({ name: 'name', required: false, description: 'Category name to search for' })
+  @ApiQuery({ name: 'page', required: false, description: 'Category page' })
+  @ApiQuery({ name: 'limit', required: false, description: 'Category limit' })
+  
+
   @Get()
-  findAll() {
-    return this.categoryService.findAll();
+  findAll(
+    @Query("name") name?: string,
+    @Query("order") order?: string,
+    @Query("page") page = 1,
+    @Query("limit") limit = 10,
+
+  ) {
+    return this.categoryService.findAll(name, order, page, limit);
   }
 
   @Get(':id')
@@ -29,6 +43,8 @@ export class CategoryController {
     return this.categoryService.findOne(id);
   }
 
+
+  
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -42,3 +58,5 @@ export class CategoryController {
     return this.categoryService.remove(id);
   }
 }
+
+// curd must be finished and add multer with swagger swagger not finished yet must be finished swagger and crud all functions
