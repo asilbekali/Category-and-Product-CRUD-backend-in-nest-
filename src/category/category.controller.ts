@@ -9,9 +9,9 @@ import {
   Query,
 } from '@nestjs/common';
 import { CategoryService } from './category.service';
-import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { ApiQuery } from '@nestjs/swagger';
+import { CreateCategoryDto } from './dto/create-category.dto';
 
 @Controller('category')
 export class CategoryController {
@@ -59,4 +59,3 @@ export class CategoryController {
   }
 }
 
-// curd must be finished and add multer with swagger swagger not finished yet must be finished swagger and crud all functions
